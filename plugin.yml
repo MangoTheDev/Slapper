@@ -3,49 +3,49 @@ author: jojoe77777
 version: 1.4.0
 description: Slapper, the NPC plugin for PocketMine-MP
 main: slapper\Main
-api: [3.0.0]
+api: [3.0.0-ALPHA12, 4.0.0]
 website: https://github.com/jojoe77777/Slapper
 
 commands:
-  slapper:
+  npc:
     description: Create a Slapper NPC, or edit an existing one!
     usage: "/slapper [args]..."
-    permission: slapper.command
-  rca:
+    permission: npc.command
+  sudo:
     description: Execute a command as someone else!
     usage: "/rca <player> <command>"
-    permission: slapper.rca
+    permission: npc.sudo
   nothing:
     description: Do nothing!
     usage: "/nothing"
-    permission: slapper.nothing
+    permission: npc.nothing
 
 permissions:
-  slapper:
+  npc:
     description: Allow using all Slapper commands
     default: op
     children:
-      slapper.command:
-        description: Allow using /slapper
+      npc.command:
+        description: Allow using /npc
         default: op
-      slapper.create:
-        description: Allow using command /slapper create
+      npc.create:
+        description: Allow using command /npc create
         default: op
-      slapper.edit:
-        description: Allow editing Slapper entity data with /slapper edit
+      npc.edit:
+        description: Allow editing Slapper entity data with /npc edit
         default: op
-      slapper.nothing:
+      npc.nothing:
         description: Allow doing nothing
         default: op
-      slapper.rca:
+      npc.sudo:
         description: Allow running commands as other players
         default: op
-      slapper.remove:
-        description: Allow removing Slapper entities with /slapper remove [id]
+      npc.remove:
+        description: Allow removing npc entities with /npc remove [id]
         default: op
-      slapper.id:
+      npc.id:
         description: Allow viewing entity ID
         default: op
-      slapper.help:
-        description: Allow viewing Slapper help page
+      npc.help:
+        description: Allow viewing npc help page
         default: op
