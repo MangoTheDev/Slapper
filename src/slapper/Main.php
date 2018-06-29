@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace npc;
+namespace slapper;
 
 use pocketmine\block\BlockFactory;
 use pocketmine\command\Command;
