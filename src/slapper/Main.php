@@ -80,41 +80,41 @@ class Main extends PluginBase implements Listener {
     /** @var array */
     public $idSessions = [];
     /** @var string */
-    public $prefix = TextFormat::GREEN . "[" . TextFormat::YELLOW . "Slapper" . TextFormat::GREEN . "] ";
+    public $prefix = TextFormat::GOLD . "[" . TextFormat::BLUE . "NPC" . TextFormat::GOLD . "] ";
     /** @var string */
-    public $noperm = TextFormat::GREEN . "[" . TextFormat::YELLOW . "Slapper" . TextFormat::GREEN . "] You don't have permission.";
+    public $noperm = TextFormat::GOLD . "[" . TextFormat::BLUE . "NPC" . TextFormat::GOLD . "] You don't have permission.";
     /** @var string */
     public $helpHeader =
         TextFormat::YELLOW . "---------- " .
-        TextFormat::GREEN . "[" . TextFormat::YELLOW . "Slapper Help" . TextFormat::GREEN . "] " .
+        TextFormat::GOLD . "[" . TextFormat::BLUE . "NPC Help" . TextFormat::GOLD . "] " .
         TextFormat::YELLOW . "----------";
 
     /** @var string[] */
     public $mainArgs = [
-        "help: /slapper help",
-        "spawn: /slapper spawn <type> [name]",
-        "edit: /slapper edit [id] [args...]",
-        "id: /slapper id",
-        "remove: /slapper remove [id]",
-        "version: /slapper version",
-        "cancel: /slapper cancel",
+        "help: /npc help",
+        "spawn: /npc spawn <type> [name]",
+        "edit: /npc edit [id] [args...]",
+        "id: /npc id",
+        "remove: /npc remove [id]",
+        "version: /npc version",
+        "cancel: /npc cancel",
     ];
     /** @var string[] */
     public $editArgs = [
-        "helmet: /slapper edit <eid> helmet <id>",
-        "chestplate: /slapper edit <eid> chestplate <id>",
-        "leggings: /slapper edit <eid> leggings <id>",
-        "boots: /slapper edit <eid> boots <id>",
-        "skin: /slapper edit <eid> skin",
-        "name: /slapper edit <eid> name <name>",
-        "addcommand: /slapper edit <eid> addcommand <command>",
-        "delcommand: /slapper edit <eid> delcommand <command>",
-        "listcommands: /slapper edit <eid> listcommands",
-        "blockid: /slapper edit <eid> block <id[:meta]>",
-        "scale: /slapper edit <eid> scale <size>",
-        "tphere: /slapper edit <eid> tphere",
-        "tpto: /slapper edit <eid> tpto",
-        "menuname: /slapper edit <eid> menuname <name/remove>"
+        "helmet: /npc edit <id> helmet <id>",
+        "chestplate: /npc edit <eid> chestplate <id>",
+        "leggings: /npc edit <id> leggings <id>",
+        "boots: /npc edit <id> boots <id>",
+        "skin: /npc edit <id> skin",
+        "name: /npc edit <id> name <name>",
+        "addcommand: /npc edit <id> addcommand <command>",
+        "delcommand: /npc edit <id> delcommand <command>",
+        "listcommands: /npc edit <id> listcommands",
+        "blockid: /npc edit <id> block <id[:meta]>",
+        "scale: /npc edit <id> scale <size>",
+        "tphere: /npc edit <id> tphere",
+        "tpto: /npc edit <id> tpto",
+        "menuname: /npc edit <id> menuname <name/remove>"
     ];
 
     /**
@@ -158,7 +158,7 @@ class Main extends PluginBase implements Listener {
             case "nothing":
                 return true;
                 break;
-            case "rca":
+            case "sudo":
                 if (count($args) < 2) {
                     $sender->sendMessage($this->prefix . "Please enter a player and a command.");
                     return true;
@@ -172,34 +172,34 @@ class Main extends PluginBase implements Listener {
                     return true;
                 }
                 break;
-            case "slapper":
+            case "npc":
                 if ($sender instanceof Player) {
                     if (!isset($args[0])) {
-                        if (!$sender->hasPermission("slapper.command")) {
+                        if (!$sender->hasPermission("npc.command")) {
                             $sender->sendMessage($this->noperm);
                             return true;
                         } else {
-                            $sender->sendMessage($this->prefix . "Please type '/slapper help'.");
+                            $sender->sendMessage($this->prefix . "Please type '/np help'.");
                             return true;
                         }
                     }
                     $arg = array_shift($args);
                     switch ($arg) {
                         case "id":
-                            if (!$sender->hasPermission("slapper.id")) {
+                            if (!$sender->hasPermission("npc.id")) {
                                 $sender->sendMessage($this->noperm);
                                 return true;
                             }
                             $this->idSessions[$sender->getName()] = true;
-                            $sender->sendMessage($this->prefix . "Hit an entity to get its ID!");
+                            $sender->sendMessage($this->prefix . "Hit an npc to get its ID!");
                             return true;
                         case "version":
-                            if (!$sender->hasPermission("slapper.version")) {
+                            if (!$sender->hasPermission("npc.version")) {
                                 $sender->sendMessage($this->noperm);
                                 return true;
                             }
                             $desc = $this->getDescription();
-                            $sender->sendMessage($this->prefix . TextFormat::BLUE . $desc->getName() . " " . $desc->getVersion() . " " . TextFormat::GREEN . "by " . TextFormat::GOLD . "jojoe77777");
+                            $sender->sendMessage($this->prefix . TextFormat::BLUE . $desc->getName() . " " . $desc->getVersion() . " " . TextFormat::GREEN . "by " . TextFormat::BLUE . "MangoTheDev.");
                             return true;
                         case "cancel":
                         case "stopremove":
@@ -233,7 +233,7 @@ class Main extends PluginBase implements Listener {
                             }
                             return true;
                         case "edit":
-                            if (!$sender->hasPermission("slapper.edit")) {
+                            if (!$sender->hasPermission("npc.edit")) {
                                 $sender->sendMessage($this->noperm);
                                 return true;
                             }
@@ -487,7 +487,7 @@ class Main extends PluginBase implements Listener {
                                         } else {
                                             $sender->sendMessage($this->helpHeader);
                                             foreach ($this->editArgs as $msgArg) {
-                                                $sender->sendMessage(str_replace("<eid>", $args[0], TextFormat::GREEN . " - " . $msgArg . "\n"));
+                                                $sender->sendMessage(str_replace("<id>", $args[0], TextFormat::GREEN . " - " . $msgArg . "\n"));
                                             }
                                             return true;
                                         }
@@ -521,7 +521,7 @@ class Main extends PluginBase implements Listener {
                         case "spawn":
                         case "apawn":
                         case "spanw":
-                            if (!$sender->hasPermission("slapper.create")) {
+                            if (!$sender->hasPermission("npc.create")) {
                                 $sender->sendMessage($this->noperm);
                                 return true;
                             }
@@ -555,13 +555,13 @@ class Main extends PluginBase implements Listener {
                             }
                             $nbt = $this->makeNBT($chosenType, $sender, $name);
                             /** @var SlapperEntity $entity */
-                            $entity = Entity::createEntity("Slapper" . $chosenType, $sender->getLevel(), $nbt);
+                            $entity = Entity::createEntity("NPC" . $chosenType, $sender->getLevel(), $nbt);
                             $this->getServer()->getPluginManager()->callEvent(new SlapperCreationEvent($entity, "Slapper" . $chosenType, $sender, SlapperCreationEvent::CAUSE_COMMAND));
                             $entity->spawnToAll();
                             $sender->sendMessage($this->prefix . $chosenType . " entity spawned with name " . TextFormat::WHITE . "\"" . TextFormat::BLUE . $name . TextFormat::WHITE . "\"" . TextFormat::GREEN . " and entity ID " . TextFormat::BLUE . $entity->getId());
                             return true;
                         default:
-                            $sender->sendMessage($this->prefix . "Unknown command. Type '/slapper help' for help.");
+                            $sender->sendMessage($this->prefix . "Unknown command. Type '/npc help' for help.");
                             return true;
                     }
                 } else {
